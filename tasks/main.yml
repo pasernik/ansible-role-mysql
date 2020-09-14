@@ -1,12 +1,12 @@
 ---
 
-- name: Install percona mysql 5.*
-  include: ps5.yml
-  when: percona_mysql_version == '5.5' or percona_mysql_version == '5.6' or percona_mysql_version == '5.7'
+- name: Install oracle mysql
+  include: mysql.yml
+  when: mysql_version == 'mysql'
 
-- name: Install percona mysql 8
-  include: ps8.yml
-  when: percona_mysql_version == '8'
+- name: Install mariadb
+  include: mariadb.yml
+  when: mysql_version == 'mariadb'
 
 - name: Start mysql server
   systemd:
@@ -22,9 +22,9 @@
   mysql_user:
     name: root
     host: "{{ item }}"
-    password: "{{ percona_mysql_root_password }}"
+    password: "{{ mysql_root_password }}"
     login_user: root
-    login_password: "{{ percona_mysql_root_password }}"
+    login_password: "{{ mysql_root_password }}"
     check_implicit_admin: yes
   with_items:
   - "{{ ansible_hostname }}"
@@ -56,14 +56,5 @@
   mysql_db:
     name: test
     state: absent
-
-- name: Create fnv1a_64
-  shell: /usr/bin/mysql -e "CREATE FUNCTION fnv1a_64 RETURNS INTEGER SONAME 'libfnv1a_udf.so'" && touch /var/log/libfnv1a_udf.so.done creates=/var/log/libfnv1a_udf.so.done
-
-- name: Create fnv_64
-  shell: /usr/bin/mysql -e "CREATE FUNCTION fnv_64 RETURNS INTEGER SONAME 'libfnv_udf.so'" && touch /var/log/libfnv_udf.so.done creates=/var/log/libfnv_udf.so.done
-
-- name: Create murmur_hash
-  shell: /usr/bin/mysql -e "CREATE FUNCTION murmur_hash RETURNS INTEGER SONAME 'libmurmur_udf.so'" && touch /var/log/libmurmur_udf.so.done creates=/var/log/libmurmur_udf.so.done
 
 ...

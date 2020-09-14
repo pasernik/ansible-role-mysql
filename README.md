@@ -1,9 +1,7 @@
-percona_mysql
+mysql
 =============
 
-[![Build Status](https://travis-ci.org/andrelohmann/ansible-role-percona_mysql.svg?branch=master)](https://travis-ci.org/andrelohmann/ansible-role-percona_mysql)
-
-Use this role to install percona-server on your debian or ubuntu server.
+Use this role to install mysql/mariadb on your debian or ubuntu server.
 
 Requirements
 ------------
@@ -15,20 +13,20 @@ Role Variables
 
 The default set of variables defines the percona installation and needs at best to be overwritten in group_vars/host_vars
 
-    percona_mysql_version: '5.7' # '5.5', '5.6', '5.7', '8'
+    mysql_version: 'mariadb' # 'mysql'
 
 The following mandatory variables need to be set in group_vars/host_vars
 
-    percona_mysql_root_password: SOMELONGPASSWORD
+    mysql_root_password: SOMELONGPASSWORD
 
 
 
 Example Playbook
 ----------------
 
-    - hosts: percona
+    - hosts: mysql-server
       roles:
-         - andrelohmann.percona_mysql
+         - ansible-role-mysql
 
 License
 -------
@@ -37,5 +35,6 @@ MIT
 
 Author Information
 ------------------
+https://github.com/pasernik
 
-https://github.com/andrelohmann
+Based on https://github.com/andrelohmann/ansible-role-percona_mysql
