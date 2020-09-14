@@ -1,4 +1,4 @@
-mysql
+ansible-role-mysql
 =============
 
 Use this role to install mysql/mariadb on your debian or ubuntu server.
